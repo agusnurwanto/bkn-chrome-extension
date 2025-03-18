@@ -1,0 +1,5 @@
+var config = {
+	bkn_url : "https://kinerja.bkn.go.id/", // alamat aplikasi kinerja bkn
+	url_server_lokal : "https://xxxxx.com/wp-admin/admin-ajax.php", // url server lokal
+	api_key : "xxxxxxxx", // api key server lokal
+};
