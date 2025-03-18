@@ -11,11 +11,14 @@ function injectScript(file, node, _type) {
     s.setAttribute('src', file);
     th.insertBefore(s, th.firstChild);
 }
-injectScript( chrome.runtime.getURL('/content_message.js'), 'html');
-injectScript( chrome.runtime.getURL('/config.js'), 'html');
+
 injectScript( chrome.runtime.getURL('/js/jquery.min.js'), 'html');
-injectScript( chrome.runtime.getURL('/js/content/content_inject.js'), 'html');
-injectScript( chrome.runtime.getURL('/js/content/functions.js'), 'html');
+injectScript( chrome.runtime.getURL('/config.js'), 'html');
+setTimeout(function(){
+	injectScript( chrome.runtime.getURL('/content_message.js'), 'html');
+	injectScript( chrome.runtime.getURL('/js/content/functions.js'), 'html');
+	injectScript( chrome.runtime.getURL('/js/content/content_inject.js'), 'html');
+}, 1000);
 window.data_temp_onmessage = {};
 
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {

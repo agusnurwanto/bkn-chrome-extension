@@ -81,6 +81,12 @@ function relayAjax(options, retries=20, delay=5000, timeout=1800000){
 			}
 		};
 	}
+
+	options.beforeSend = function (xhr) {			    
+		xhr.setRequestHeader("Authorization", 'Bearer '+localStorage.token);
+		xhr.setRequestHeader("X-Xsrf-Token", getCookieData('XSRF-TOKEN'));  
+	}
+
     jQuery.ajax(options)
     .fail(function(jqXHR, exception){
     	// console.log('jqXHR, exception', jqXHR, exception);
@@ -104,4 +110,36 @@ function relayAjax(options, retries=20, delay=5000, timeout=1800000){
             alert('Capek. Sudah dicoba berkali-kali error terus. Maaf, berhenti mencoba.');
         }
     });
+}
+
+function getCookieData( name ) {
+    var pairs = document.cookie.split("; "),
+        count = pairs.length, parts; 
+    while ( count-- ) {
+        parts = pairs[count].split("=");
+        if ( parts[0] === name )
+            return parts[1];
+    }
+    return false;
+}
+
+function get_profile(){
+	if(typeof profile_bkn == 'undefined'){
+		window.profile_bkn = {};
+	}
+	new Promise(function(resolve, reject){
+		relayAjax({
+			url: config.bkn_url+'api/pegawai/profil',
+			success: function(val){
+				if(val.success){
+					profile_bkn = val.data;
+				}
+				resolve(profile_bkn);
+			}
+		});
+	});
+}
+
+function get_rhk_lokal(){
+	console.log('get_rhk_lokal');
 }
