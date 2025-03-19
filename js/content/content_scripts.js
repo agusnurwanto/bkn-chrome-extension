@@ -38,10 +38,10 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
 		var res = request.data;
 		var _alert = true;
 		var cek_hide_loading = true;
-		if(res.action == 'singkronisasi_bkn'){
+		if(res.action == 'get_rencana_hasil_kerja'){
 			_alert = false;
 			cek_hide_loading = false;
-			continue_dtks(continue_dtks_next_data);
+			open_modal_rhk_lokal(res.data);
 		}
 		if(cek_hide_loading){
 			hide_loading();

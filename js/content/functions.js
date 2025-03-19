@@ -141,5 +141,38 @@ function get_profile(){
 }
 
 function get_rhk_lokal(){
-	console.log('get_rhk_lokal');
+	show_loading();
+	var kode_rhk = location.href.split('/').pop();
+	pesan_loading('GET detail RHK BKN dengan kode "'+kode_rhk);
+	relayAjax({
+		url: config.bkn_url+'api/skp/'+kode_rhk+'?master=1',
+		success: function(val){
+			pesan_loading('GET RHK lokal atas Nama "'+profile_bkn.nama+'", NIP: '+profile_bkn.nip+', Tahun: '+val.data.info.tahun+', Jabatan: '+val.data.info.pegawai_jabatan);
+			var data_peg = {
+				action: 'get_rencana_hasil_kerja',
+				api_key: config.api_key,
+				nip: profile_bkn.nip,
+				tahun_anggaran: val.data.info.tahun
+			}
+			var data_back = {
+			    message:{
+			        type: "get-url",
+			        content: {
+					    url: config.url_server_lokal,
+					    type: 'post',
+					    data: data_peg,
+		    			return: true
+					}
+			    }
+			};
+			chrome.runtime.sendMessage(data_back, function(response) {
+			    console.log('responeMessage', response);
+			});
+		}
+	});
+}
+
+function open_modal_rhk_lokal(data){
+	console.log('Open RHK Modal', data);
+	hide_loading();
 }

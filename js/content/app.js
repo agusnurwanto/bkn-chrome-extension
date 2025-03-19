@@ -36,13 +36,13 @@ function cekUrl(current_url, nomor=1){
 			console.log('Halaman SKP', nomor);
 			var btn_rhk = `
 				<div class="col-12 col-sm-4 col-md-3 aksi-extension">
-					<button class="btn btn-block btn-warning" id="tarik-rhk-lokal">Tarik data RHK dari Lokal</button>
+					<button class="btn btn-block btn-warning" id="tarik-rhk-lokal" style="font-weight: bold;">Tarik data RHK dari Lokal</button>
 				</div>
 			`;
 			jQuery('div:contains("Ajukan SKP").col-12.col-sm-4.col-md-3').after(btn_rhk);
 			jQuery('#tarik-rhk-lokal').on('click', function(){
 				get_rhk_lokal();
-			})
+			});
 		}
 
 		// ulangi cek url
