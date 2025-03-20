@@ -34,6 +34,36 @@ function cekUrl(current_url, nomor=1){
 		if(current_url.indexOf('/skp/') != -1){
 			cek_reload = false;
 			console.log('Halaman SKP', nomor);
+
+			var modal = ''
+				+'<div class="modal fade modal-extension" id="modal-extension" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" style="z-index: 99999; background: #0000003d;">'
+			        +'<div class="modal-dialog" style="max-width: 1500px;" role="document">'
+			            +'<div class="modal-content">'
+			                +'<div class="modal-header bgpanel-theme">'
+			                    +'<h3 class="fw-bolder m-0">Data Rencana Hasil Kerja (RHK) Lokal</h4>'
+			                    +'<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>'
+			                +'</div>'
+			                +'<div class="modal-body">'
+			                  	+'<table class="table table-bordered table-hover table-striped" id="table-extension">'
+			                      	+'<thead>'
+			                        	+'<tr>'
+			                          		+'<th class="text-center" style="font-weight: bold;"><input type="checkbox" id="modal_cek_all"></th>'
+			                          		+'<th class="text-center" style="font-weight: bold;">RHK Atasan</th>'
+			                          		+'<th class="text-center" style="font-weight: bold;">RHK</th>'
+			                          		+'<th class="text-center" style="font-weight: bold;">Indikator</th>'
+			                        	+'</tr>'
+			                      	+'</thead>'
+			                      	+'<tbody></tbody>'
+			                  	+'</table>'
+			                +'</div>'
+			                +'<div class="modal-footer">'
+			                    +'<button type="button" class="btn btn-primary" id="proses-extension">Simpan</button>'
+			                    +'<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>'
+			                +'</div>'
+			            +'</div>'
+			        +'</div>'
+			    +'</div>';
+			jQuery('body').append(modal);
 			var btn_rhk = `
 				<div class="col-12 col-sm-4 col-md-3 aksi-extension">
 					<button class="btn btn-block btn-warning" id="tarik-rhk-lokal" style="font-weight: bold;">Tarik data RHK dari Lokal</button>

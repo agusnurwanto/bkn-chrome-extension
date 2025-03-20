@@ -174,5 +174,42 @@ function get_rhk_lokal(){
 
 function open_modal_rhk_lokal(data){
 	console.log('Open RHK Modal', data);
+	var body = '';
+	for (var i in data){
+		var indikator = '';
+		for(ind in data[i].indikator){
+			indikator += `
+				<tr>
+					<td class="text-center">${data[i].indikator[ind].aspek_rhk_teks}</td>
+					<td>${data[i].indikator[ind].indikator}</td>
+					<td class="text-center">${data[i].indikator[ind].target_akhir}</td>
+					<td class="text-center">${data[i].indikator[ind].satuan}</td>
+				</tr>
+			`;
+		}
+		body += `
+			<tr>
+				<td class="text-center"><input type="checkbox"></td>
+				<td>-</td>
+				<td>${data[i].detail.label}</td>
+				<td style="padding: 2px;">
+					<table class="table table-bordered" style="margin: 0;">
+						<thead>
+							<tr>
+								<th class="text-center">Aspek</th>
+								<th class="text-center">Indikator</th>
+								<th class="text-center">Target</th>
+								<th class="text-center">Satuan</th>
+							</tr>
+						</thead>
+						<tbody>
+							${indikator}
+						</tbody>
+					</table>
+			</tr>
+		`;
+	}
+	jQuery('#table-extension tbody').html(body);
+	run_script('show_modal_sm', {order: [[1, "asc"]]});
 	hide_loading();
 }
