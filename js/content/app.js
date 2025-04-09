@@ -1,5 +1,3 @@
-get_profile();
-
 let previousUrl = "";
 const observer = new MutationObserver(() => {
   	if (window.location.href !== previousUrl) {
@@ -32,6 +30,7 @@ function cekUrl(current_url, nomor=1){
 		var cek_reload = true;
 
 		if(current_url.indexOf('/skp/') != -1){
+			get_profile();
 			cek_reload = false;
 			console.log('Halaman SKP', nomor);
 
@@ -69,9 +68,13 @@ function cekUrl(current_url, nomor=1){
 					<button class="btn btn-block btn-warning" id="tarik-rhk-lokal" style="font-weight: bold;">Tarik data RHK dari Lokal</button>
 				</div>
 			`;
-			jQuery('div:contains("Ajukan SKP").col-12.col-sm-4.col-md-3').after(btn_rhk);
+			// jQuery('div:contains("Ajukan SKP").col-12.col-sm-4.col-md-3').after(btn_rhk);
+			jQuery('div:contains("Cetak").col-12.col-sm-4.col-md-3').after(btn_rhk);
 			jQuery('#tarik-rhk-lokal').on('click', function(){
 				get_rhk_lokal();
+			});
+			jQuery('#proses-extension').on('click', function(){
+				simpan_rhk_bkn();
 			});
 		}
 

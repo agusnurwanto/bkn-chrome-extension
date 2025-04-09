@@ -147,6 +147,7 @@ function get_rhk_lokal(){
 	relayAjax({
 		url: config.bkn_url+'api/skp/'+kode_rhk+'?master=1',
 		success: function(val){
+			window.data_current_rhk = val;
 			pesan_loading('GET RHK lokal atas Nama "'+profile_bkn.nama+'", NIP: '+profile_bkn.nip+', Tahun: '+val.data.info.tahun+', Jabatan: '+val.data.info.pegawai_jabatan);
 			var data_peg = {
 				action: 'get_rencana_hasil_kerja',
@@ -187,9 +188,37 @@ function open_modal_rhk_lokal(data){
 				</tr>
 			`;
 		}
+		var cek_existing = '<input type="checkbox">';
+		var cek_rhk_atasan = '';
+		var cek_rhk_indikator = {
+			lokal: {},
+			bkn: {}
+		};
+		data_current_rhk.data.kinerja.map(function(b, ii){
+			if(data[i].detail.label.toLowerCase().trim() == b.rhk.toLowerCase().trim()){
+				cek_existing = 'RHK sudah ada';
+				cek_rhk_atasan = '<br>RHK atasan tidak sama dengan RHK di lokal';
+
+				// cek rhk atasan
+				for( var bb in data[i].detail_atasan){
+					if(data[i].detail_atasan[bb].label.toLowerCase().trim() == b.rhk_atasan.toLowerCase().trim()){
+						cek_rhk_atasan = '';
+					}
+				}
+
+				// cek indikator rhk
+				b.indikators.map(function(bb, n){
+					for( var bb in data[i].detail_atasan){
+						if(data[i].detail_atasan[bb].label.toLowerCase().trim() == b.rhk_atasan.toLowerCase().trim()){
+							cek_rhk_atasan = '';
+						}
+					}
+				});
+			}
+		});
 		body += `
 			<tr>
-				<td class="text-center"><input type="checkbox"></td>
+				<td class="text-center">${cek_existing} ${cek_rhk_atasan}</td>
 				<td>-</td>
 				<td>${data[i].detail.label}</td>
 				<td style="padding: 2px;">
@@ -212,4 +241,8 @@ function open_modal_rhk_lokal(data){
 	jQuery('#table-extension tbody').html(body);
 	run_script('show_modal_sm', {order: [[1, "asc"]]});
 	hide_loading();
+}
+
+function simpan_rhk_bkn(){
+	alert('simpan RHK masih dalam pengembangan!');
 }
